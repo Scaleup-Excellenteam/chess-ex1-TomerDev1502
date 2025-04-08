@@ -14,4 +14,4 @@ MyClass::MyClass()
 
 MyClass::~MyClass()
 {
-}
+} 

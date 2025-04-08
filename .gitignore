@@ -7,7 +7,7 @@
 /*.so
 /*.exe
 /*.out
-.vs/
+.vs/ 
 
 # Ignore IDE and editor configuration files
 .vscode/

@@ -8,8 +8,7 @@ class Board; // Forward declaration
 
 class Piece {
 public:
-    Piece(bool isWhite, int row, int col)
-        : m_isWhite(isWhite), m_row(row), m_col(col) {}
+    Piece(bool isWhite, int row, int col);
     virtual ~Piece() = default;
 
     virtual bool isValidMove(int destRow, int destCol,

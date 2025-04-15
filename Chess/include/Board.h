@@ -43,7 +43,7 @@ private:
     // DEBUG: Prints board to console
     void print() const;
 
-    int validateBasicRules(int srcRow, int srcCol, int destRow, int destCol) const;
+    int validateBaseRule(int srcRow, int srcCol, int destRow, int destCol) const;
 
     int validatePieceMovement(int srcRow, int srcCol, int destRow, int destCol) const;
 

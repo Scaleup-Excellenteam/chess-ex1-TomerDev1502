@@ -48,7 +48,10 @@ int Board::validateMove(const std::string& source, const std::string& dest)
         return valid;
     }
 
-    std::shared_ptr<Piece> piece = m_board[srcRow][srcCol];
+    
+
+    /*
+     std::shared_ptr<Piece> piece = m_board[srcRow][srcCol];
     // Execute the move temporarily
     std::shared_ptr<Piece> capturedPiece = this->m_board[destRow][destCol];
     this->m_board[destRow][destCol] = piece;
@@ -58,13 +61,9 @@ int Board::validateMove(const std::string& source, const std::string& dest)
     int oldRow = piece->getRow();
     int oldCol = piece->getCol();
     piece->setPosition(destRow, destCol);
-
     // Update king position if the king is moving
     int oldKingRow = -1, oldKingCol = -1;
     bool isKingMoving = this->isKingMoving(piece);
-   
-
-    /*
      if (isKingMoving) {
         updateKingPos(piece, oldKingRow, oldKingCol, destRow, destCol);
     }

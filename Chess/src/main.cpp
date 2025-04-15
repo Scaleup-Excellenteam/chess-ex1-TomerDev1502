@@ -5,7 +5,7 @@
 int main()
 {
 	//string board = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr"; 
-	string board = "##########################################R#############r#r#####";
+	string board = "####K#####################################R#############r#r#####";
 	Chess a(board);
 
 	Board objectBoard(board);

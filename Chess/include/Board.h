@@ -5,7 +5,7 @@
 #include <memory>
 #include "Pieces/Piece.h"
 #include "PieceFactory.h"
-//#include "Pieces/King.h"
+#include "Pieces/King.h"
 
 class Board {
 public:
@@ -37,11 +37,9 @@ private:
     // Checks if the king of the given color is in check
     bool isKingInCheck(bool isWhiteKing) const;
 
+    bool isKingInCheck(const King& king) const;
     // Gets current turn
     bool getIsWhiteTurn() const;
-
-    // DEBUG: Prints board to console
-    void print() const;
 
     int validateBaseRule(int srcRow, int srcCol, int destRow, int destCol) const;
 
@@ -49,7 +47,10 @@ private:
 
     bool isKingMoving(std::shared_ptr<Piece> piece) const;
 
-    void updateKingPosition(std::shared_ptr<Piece> piece, int destRow, int destCol);
+    
+
+    void updateKingPos(std::shared_ptr<Piece> piece, int& oldKingRow,
+        int& oldKingCol, const int& destRow, const int& destCol);
 
     void restoreBoard(std::shared_ptr<Piece> movedPiece, std::shared_ptr<Piece> capturedPiece,
         int srcRow, int srcCol, int destRow, int destCol, bool wasKingMove);

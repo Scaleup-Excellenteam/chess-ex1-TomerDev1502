@@ -88,36 +88,18 @@ int Board::validateMove(const std::string& source, const std::string& dest) {
 
 void Board::doMove(const std::string& source, const std::string& dest)
 {
-	// Convert chess notation to board coordinates
-	auto [srcRow, srcCol] = notationToCoordinates(source);
-	auto [destRow, destCol] = notationToCoordinates(dest);
-
-	// Execute the move
-	std::shared_ptr<Piece> piece = m_board[srcRow][srcCol];
-	m_board[destRow][destCol] = piece;
-	m_board[srcRow][srcCol] = nullptr;
-
-	// Update piece position
-	piece->setPosition(destRow, destCol);
-
-	// Switch turn
-	m_isWhiteTurn = !m_isWhiteTurn;
-
-	
-/*
-*  auto [srcRow, srcCol] = notationToCoordinates(source);
+    auto [srcRow, srcCol] = notationToCoordinates(source);
     auto [destRow, destCol] = notationToCoordinates(dest);
 
     std::shared_ptr<Piece> piece = m_board[srcRow][srcCol];
     m_board[destRow][destCol] = piece;
     m_board[srcRow][srcCol] = nullptr;
 
-    // Update piece position
     piece->setPosition(destRow, destCol);
 
     // Update king position if the king is moving
     if (std::dynamic_pointer_cast<King>(piece)) {
-        if (piece->getIsWhite()) {
+        if (piece->isWhite()) {
             m_whiteKingRow = destRow;
             m_whiteKingCol = destCol;
         }
@@ -129,11 +111,8 @@ void Board::doMove(const std::string& source, const std::string& dest)
 
     // Switch turn
     m_isWhiteTurn = !m_isWhiteTurn;
-*/
-   
-
 }
-        
+
 
 //==================================================================================
 std::pair<int, int> Board::notationToCoordinates(const std::string& notation) const
@@ -241,18 +220,14 @@ bool Board::isKingMoving(std::shared_ptr<Piece> piece) const
 }
 //==================================================================================
 
-void Board::updateKingPos(std::shared_ptr<Piece> piece, int& oldKingRow, int& oldKingCol, const int& destRow, const int& destCol)
+void Board::updateKingPos(std::shared_ptr<Piece> piece, const int& destRow, const int& destCol)
 {
 	// Update the king's position if the moved piece is a king
 	if (piece->isWhite()) {
-        oldKingRow = m_whiteKingRow;
-        oldKingCol = m_whiteKingCol;
         m_whiteKingRow = destRow;
         m_whiteKingCol = destCol;
     }
     else {
-        oldKingRow = m_blackKingRow;
-        oldKingCol = m_blackKingCol;
         m_blackKingRow = destRow;
         m_blackKingCol = destCol;
 	}

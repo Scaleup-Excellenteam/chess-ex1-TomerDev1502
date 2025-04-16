@@ -1,13 +1,13 @@
 #include "Pieces/Rook.h"
-#include "PieceFactory.h"
+
 
 Rook::Rook(bool isWhite, int row, int col)
     : Piece(isWhite, row, col) {}
-
+//==========================================================================
 char Rook::getSymbol() const {
     return isWhite() ? 'R' : 'r';
 }
-
+//==========================================================================
 bool Rook::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -27,7 +27,7 @@ bool Rook::isValidMove(int destRow, int destCol,
     // Make sure path is clear
     return isPathClear(destRow, destCol, board);
 }
-
+//==========================================================================
 bool Rook::isPathClear(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {

@@ -1,15 +1,18 @@
 # ninja log v5
-2	131	7664975687975349	build.ninja	dd815902aa1451bc
+2	131	7664989895465663	build.ninja	dd815902aa1451bc
 26	923	7664974463427605	CMakeFiles/Chess.dir/src/Board.cpp.obj	8f98e285bfb644f0
-3	1379	7664974618080535	CMakeFiles/Chess.dir/src/main.cpp.obj	ae2ec7035366347b
+9	939	7664982662895837	CMakeFiles/Chess.dir/src/Pieces/Queen.cpp.obj	202e8e7a7e538d70
+3	1709	7664982670586010	CMakeFiles/Chess.dir/src/main.cpp.obj	ae2ec7035366347b
 9	1523	7664974469431700	CMakeFiles/Chess.dir/src/Chess.cpp.obj	cf6927899dc0cfbe
 20	868	7664974462886530	CMakeFiles/Chess.dir/src/Pieces/Rook.cpp.obj	7f98d19e2dc7b83
-1380	1551	7664974619364553	Chess.exe	8ccac1245fa43ae0
+1710	1944	7664982672407837	Chess.exe	1b4f7e11b651ff5
 14	749	7664974461680407	CMakeFiles/Chess.dir/src/Pieces/Piece.cpp.obj	9f1234bea220755f
 750	1453	7664974468736404	CMakeFiles/Chess.dir/src/PieceFactory.cpp.obj	7fc8f3d2442fe382
 32	847	7664974462669628	CMakeFiles/Chess.dir/src/Pieces/King.cpp.obj	b4f85c45956d7e0e
 38	850	7664974462699551	CMakeFiles/Chess.dir/src/Pieces/Bishop.cpp.obj	6ed5abd99829262f
 2	15	0	clean	8c45b54705a541e8
-9	939	7664982662895837	CMakeFiles/Chess.dir/src/Pieces/Queen.cpp.obj	202e8e7a7e538d70
-3	1709	7664982670586010	CMakeFiles/Chess.dir/src/main.cpp.obj	ae2ec7035366347b
-1710	1944	7664982672407837	Chess.exe	1b4f7e11b651ff5
+2	917	7664990318423697	CMakeFiles/Chess.dir/src/Pieces/Knight.cpp.obj	31833bc2f2254290
+9	927	7664990318540928	CMakeFiles/Chess.dir/src/Pieces/Pawn.cpp.obj	fc85aff539fef5f7
+928	1145	7664990320238342	Chess.exe	f5150b30e7a0808a
+2	1382	7664990489077623	CMakeFiles/Chess.dir/src/main.cpp.obj	ae2ec7035366347b
+1382	1555	7664990490395977	Chess.exe	f5150b30e7a0808a

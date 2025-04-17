@@ -3,11 +3,11 @@
 
 Knight::Knight(bool isWhite, int row, int col)
     : Piece(isWhite, row, col) {}
-
+//==============================================================================
 char Knight::getSymbol() const {
     return isWhite() ? 'N' : 'n';
 }
-
+//==============================================================================
 bool Knight::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -29,14 +29,14 @@ bool Knight::isValidMove(int destRow, int destCol,
 
     return true;
 }
-
+//==============================================================================
 // Knights jump over pieces, so path is always "clear"
 bool Knight::isPathClear(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
     return true;
 }
-
+//==============================================================================
 bool Knight::isRegistered = PieceFactory::registerPiece('N', [](bool isWhite, int x, int y) {
     return std::make_shared<Knight>(isWhite, x, y);
 });

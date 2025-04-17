@@ -3,11 +3,11 @@
 
 Pawn::Pawn(bool isWhite, int row, int col)
     : Piece(isWhite, row, col) {}
-
+//==============================================================================
 char Pawn::getSymbol() const {
     return isWhite() ? 'P' : 'p';
 }
-
+//==============================================================================
 bool Pawn::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -36,7 +36,7 @@ bool Pawn::isValidMove(int destRow, int destCol,
 
     return false;
 }
-
+//==============================================================================
 bool Pawn::isPathClear(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -58,7 +58,7 @@ bool Pawn::isPathClear(int destRow, int destCol,
     // Diagonal captures already handled in isValidMove (only allowed if enemy present)
     return true;
 }
-
+//==============================================================================
 bool Pawn::isRegistered = PieceFactory::registerPiece('P', [](bool isWhite, int x, int y) {
     return std::make_shared<Pawn>(isWhite, x, y);
     });

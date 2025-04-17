@@ -3,11 +3,11 @@
 
 Queen::Queen(bool isWhite, int row, int col)
     : Piece(isWhite, row, col) {}
-
+//======================================================================
 char Queen::getSymbol() const {
     return isWhite() ? 'Q' : 'q';
 }
-
+//======================================================================
 bool Queen::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -26,7 +26,7 @@ bool Queen::isValidMove(int destRow, int destCol,
 
     return isPathClear(destRow, destCol, board);
 }
-
+//======================================================================
 bool Queen::isPathClear(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
@@ -47,7 +47,7 @@ bool Queen::isPathClear(int destRow, int destCol,
 
     return true;
 }
-
+//======================================================================
 bool Queen::isRegistered = PieceFactory::registerPiece('Q', [](bool isWhite, int x, int y) {
     return std::make_shared<Queen>(isWhite, x, y);
     });

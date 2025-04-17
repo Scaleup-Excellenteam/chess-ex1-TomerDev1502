@@ -126,6 +126,7 @@ std::pair<int, int> Board::notationToCoordinates(const std::string& notation) co
 	return { row, col };
 }
 //==================================================================================
+// function to check if the original king is in check
 bool Board::isKingInCheck(bool isWhiteKing) const
 {
 	int kingRow = isWhiteKing ? m_whiteKingRow : m_blackKingRow;
@@ -147,6 +148,7 @@ bool Board::isKingInCheck(bool isWhiteKing) const
                    
 }
 //==================================================================================
+// function to check if the tested new king which created in the function is in check after a possible move
 bool Board::isKingInCheck(const King& king) const
 {
     int kingRow = king.getRow();

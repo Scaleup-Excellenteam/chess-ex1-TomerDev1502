@@ -5,16 +5,19 @@
 
 int main()
 {
-	PriorityQueue q;
+	PriorityQueue<int> q;             // now templated
+	q.push(10);
+	q.push(5);
+	q.push(20);
+	std::cout << q.poll() << "\n";    // still prints 20
+
 	try {
-		q.push(10);
-		q.push(5);
-		q.push(20);
-		std::cout << q.poll() << "\n"; // should print 20
 		q.push(1);
 		q.push(2);
 		q.push(3);
-		q.push(4); // throws QueueOverflowException
+		q.push(4);
+		q.push(5);
+		q.push(6);                    // should throw
 	}
 	catch (const std::exception& ex) {
 		std::cout << "Caught: " << ex.what() << "\n";

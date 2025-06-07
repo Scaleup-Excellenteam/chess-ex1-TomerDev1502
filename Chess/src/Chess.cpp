@@ -1,6 +1,7 @@
 #include "Chess.h"
 #include <iostream>
 #include <string>
+#include "MoveGenerator.h"
 
 using namespace std;
 
@@ -291,8 +292,23 @@ string Chess::getInput()
 		doTurn(); 
 
 	displayBoard();
+	Board tmp(m_boardString);
+	MoveGenerator gen;
+	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/1);
+	if (!best.empty()) {
+		auto const& mv = best[0].move;
+		// files a–h from col 0–7, ranks 1–8 from row 7–0
+		char rowFrom = char('a' + mv.fromRow);
+		char colFrom = char('1' + mv.fromCol);
+		char rowTo = char('a' + mv.toRow);
+		char colTo = char('1' + mv.toCol);
+		std::cout << "Recommended move: "
+			<< rowFrom << colFrom
+			<< rowTo << colTo
+			<< "\n\n";
+	}
 	showAskInput();
-
+	
 	cin >> m_input;
 	if (isExit())
 		return "exit";

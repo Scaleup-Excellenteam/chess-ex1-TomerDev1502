@@ -1,8 +1,7 @@
 #pragma once
 
 #include <list>
-#include "InvalidQueueException.h"
-#include "QueueOverflowException.h"
+#include <cstddef>
 
 /// Default comparator: larger values have higher priority
 template<typename T>
@@ -12,47 +11,47 @@ struct DefaultComparator {
     }
 };
 
-/// A fixed-size priority queue for elements of type T
-/// Uses Comparator to order elements. Throws on overflow or invalid access.
+/// A bounded priority queue: keeps at most `capacity` items of type T,
+/// ordered by Comparator (default = DefaultComparator<T>).
 template<
     typename T,
     class Comparator = DefaultComparator<T>
 >
 class PriorityQueue {
 public:
-    PriorityQueue() = default;
+    /// Create a PriorityQueue that holds at most `capacity` elements.
+    explicit PriorityQueue(std::size_t capacity = 5)
+        : capacity_(capacity) {}
 
-    /// Insert value in sorted position (O(n)).
-    /// Throws QueueOverflowException if size >= MAX_SIZE.
+    /// Insert `value` in sorted order (O(n)). If size > capacity_,
+    /// pop the worst (last) element.
     void push(T const& value) {
-        if (data_.size() >= MAX_SIZE)
-            throw QueueOverflowException();
-
+        // find insert position
         auto it = data_.begin();
         while (it != data_.end() && !comp_(value, *it)) {
             ++it;
         }
         data_.insert(it, value);
+
+        // drop the last if we exceeded capacity
+        if (data_.size() > capacity_) {
+            data_.pop_back();
+        }
     }
 
-    /// Remove and return the highest-priority element (O(1)).
-    /// Throws InvalidQueueException if empty.
+    /// Remove & return the highest-priority element (O(1)).
+    /// Call only if !empty().
     T poll() {
-        if (data_.empty())
-            throw InvalidQueueException("poll on empty PriorityQueue");
-
         T top = data_.front();
         data_.pop_front();
         return top;
     }
 
-    /// Check if queue is empty
-    bool empty() const noexcept {
-        return data_.empty();
-    }
+    bool empty() const noexcept { return data_.empty(); }
+    std::size_t size()  const noexcept { return data_.size(); }
 
 private:
-    static constexpr size_t MAX_SIZE = 5;
-    std::list<T> data_;
-    Comparator comp_;
+    std::size_t   capacity_;
+    std::list<T>  data_;
+    Comparator    comp_;
 };

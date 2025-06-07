@@ -19,6 +19,8 @@ public:
 
     // Executes a validated move
     void doMove(const std::string& source, const std::string& dest);
+    const std::vector<std::vector<std::shared_ptr<Piece>>> &
+        getMatrix() const noexcept { return m_board; }
 
   
 

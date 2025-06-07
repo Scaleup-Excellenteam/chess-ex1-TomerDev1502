@@ -1,30 +1,33 @@
-# Ignore build files and compiled binaries
-/build/
-/CMakeCache.txt
-/CMakeFiles/
-/*.o
-/*.a
-/*.so
-/*.exe
-/*.out
-.vs/
-/out/
+#— Ignore ALL “out” and “build” directories anywhere in the tree
+**/out/
+**/build/
 
-# Ignore IDE and editor configuration files
+#— CMake generated files
+CMakeCache.txt
+CMakeFiles/
+**/.cmake/
+
+#— Compiled objects, libs, executables
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+#— Visual Studio (and VSCode) settings
+.vs/
 .vscode/
-.idea/
+
+#— IDE/editor swap & logs
 *.swp
 *.swo
-
-# Ignore GitHub Actions temporary files
-.github/workflows/*.log
-.github/workflows/*.cache
-
-# Ignore debugging and log files
 *.log
 *.tmp
 *.bak
 
-# Ignore temporary image cache
-img/cache/
+#— GitHub Actions temp
+.github/workflows/*.log
+.github/workflows/*.cache
 
+#— Your image cache
+img/cache/

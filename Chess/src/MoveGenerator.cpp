@@ -25,7 +25,7 @@ MoveGenerator::getBestMoves(const Board& board,
                     bool capture = (mat[tr][tc] && mat[tr][tc]->isWhite() != whiteToMove);
                     Move mv{ r, c, tr, tc, capture, whiteToMove, sym };
                     int score = evaluateMove(mat, mv, whiteToMove);
-                    pq.push({ mv, score });
+                    pq.push({ mv, score }); 
                 }
             }
         }

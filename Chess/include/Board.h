@@ -22,6 +22,8 @@ public:
     const std::vector<std::vector<std::shared_ptr<Piece>>> &
         getMatrix() const noexcept { return m_board; }
 
+    void doMove(int fromRow, int fromCol, int toRow, int toCol);
+    Board(const Board& other);
   
 
 private:

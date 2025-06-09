@@ -26,9 +26,11 @@ bool Pawn::isValidMove(int destRow, int destCol,
 
     // 1) Single‐step forward into empty square
     if (colDiff == 0 && rowDiff == direction && !target) {
-    
+      //return true
          return_val = true;
     }
+
+  
 
     // 2) Double‐step from starting rank: both the intermediate and landing squares must be empty
     if (colDiff == 0
@@ -37,7 +39,7 @@ bool Pawn::isValidMove(int destRow, int destCol,
         && !board[r + direction][c]
         && !target)
     {
-       
+        //return true
          return_val = true;
     }
 
@@ -47,11 +49,21 @@ bool Pawn::isValidMove(int destRow, int destCol,
         && target
         && target->isWhite() != isWhite())
     {
-        
+        //return true
          return_val = true;
     }
 
-   
+    // All other pawn moves are illegal
+    
+    /*if (r == 1 && c == 2 && destRow == 5 && destCol == 2) {
+        if (return_val)
+        {
+            std::cout << " true" << "\n";
+        }
+        else
+            std::cout << " false" << "\n";
+
+    }*/
 
     return return_val;
 }

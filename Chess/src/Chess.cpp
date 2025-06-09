@@ -276,8 +276,8 @@ void Chess::doTurn()
 }
 
 // C'tor
-Chess::Chess(const string& start)
-	: m_boardString(start), m_codeResponse(-1), depth(0),m_turn(true)
+Chess::Chess(const string& start,const Board &board)
+	: m_boardString(start), m_codeResponse(-1), depth(0), m_turn(true), m_boardObject(board)
 {
 	setFrames();
 	setPieces();
@@ -305,13 +305,13 @@ string Chess::getInput()
 	displayBoard();
 
 	// 2) Recommend top 3 moves
-	Board tmp(m_boardString);
+	Board tmp(m_boardObject);
 	MoveGenerator gen;
-	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/1, depth);
+	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/3, depth);
 	cout << "most recommanded move : ";
-	for (size_t i = 0; i < best.size() && i < 1; ++i) {
+	for (size_t i = 0; i < best.size() && i < 3; ++i) {
 		cout << best[i].toString();
-		if (i + 1 < best.size() && i + 1 < 1) cout << ' ';
+		if (i + 1 < best.size() && i + 1 < 3) cout << ' ';
 	}
 	cout << '\n';
 

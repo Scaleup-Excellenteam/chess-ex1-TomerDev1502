@@ -30,6 +30,48 @@ Board::Board(const std::string& initialBoard)
     }
 }
 
+void Board::doMove(int fromRow, int fromCol, int toRow, int toCol) {
+    auto piece = m_board[fromRow][fromCol];
+    auto captured = m_board[toRow][toCol];
+
+    // relocate in our matrix
+    m_board[fromRow][fromCol] = nullptr;
+    m_board[toRow][toCol] = piece;
+
+    // tell the piece its new home
+    piece->setPosition(toRow, toCol);
+
+    // if it’s a king, update our king?trackers
+    if (auto k = std::dynamic_pointer_cast<King>(piece)) {
+        if (k->isWhite()) {
+            m_whiteKingRow = toRow;
+            m_whiteKingCol = toCol;
+        }
+        else {
+            m_blackKingRow = toRow;
+            m_blackKingCol = toCol;
+        }
+    }
+}
+
+Board::Board(const Board& other)
+    : m_isWhiteTurn(other.m_isWhiteTurn),
+    m_whiteKingRow(other.m_whiteKingRow), m_whiteKingCol(other.m_whiteKingCol),
+    m_blackKingRow(other.m_blackKingRow), m_blackKingCol(other.m_blackKingCol)
+{
+    m_board.resize(8, std::vector<std::shared_ptr<Piece>>(8, nullptr));
+
+    for (int r = 0; r < 8; ++r) {
+        for (int c = 0; c < 8; ++c) {
+            auto const& p = other.m_board[r][c];
+            if (p) {
+                // Create a brand?new Piece of the same type, at the same coords
+                m_board[r][c] = PieceFactory::createPiece(p->getSymbol(), r, c);
+            }
+        }
+    }
+}
+
 int Board::validateMove(const std::string& source, const std::string& dest) {
     // Convert chess notation to board coordinates
     auto [srcRow, srcCol] = notationToCoordinates(source);

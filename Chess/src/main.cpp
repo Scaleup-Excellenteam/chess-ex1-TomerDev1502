@@ -8,8 +8,9 @@ int main()
 {
     std::string board = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr";
     //std::string board = "##QBK#####################################R#############r#r#####";
-    Chess a(board);
     Board objectBoard(board);
+    Chess a(board);
+    
 
     int codeResponse = 0;
     std::string res = a.getInput();

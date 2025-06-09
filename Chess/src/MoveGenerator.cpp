@@ -2,8 +2,10 @@
 #include <string>
 #include <iostream>
 
+
+
 std::vector<ScoredMove>
-MoveGenerator::getBestMoves(const Board& board,
+MoveGenerator::getBestMoves(const Board & board,
     bool whiteToMove,
     size_t maxCount,
     int depth)
@@ -37,13 +39,7 @@ MoveGenerator::getBestMoves(const Board& board,
                     // --- 1-ply lookahead: subtract opponent's reply ---
                     if (depth > 0) {
                         Board b1(board);
-                        std::string src, dst;
-                        src.push_back(char('A' + r));
-                        src.push_back(char('1' + c));
-                        dst.push_back(char('A' + tr));
-                        dst.push_back(char('1' + tc));
-                        b1.doMove(src, dst);
-
+                        b1.doMove(r, c, tr, tc);  // numeric overload
                         auto opp = getBestMoves(b1, !whiteToMove, 1, depth - 1);
                         if (!opp.empty())
                             totalScore -= opp[0].score;
@@ -52,24 +48,17 @@ MoveGenerator::getBestMoves(const Board& board,
                     // --- 2-ply lookahead: add your next response ---
                     if (depth > 1) {
                         Board b1(board);
-                        std::string src1, dst1;
-                        src1.push_back(char('A' + r));
-                        src1.push_back(char('1' + c));
-                        dst1.push_back(char('A' + tr));
-                        dst1.push_back(char('1' + tc));
-                        b1.doMove(src1, dst1);
-
+                        b1.doMove(r, c, tr, tc);  // numeric overload
                         auto opp = getBestMoves(b1, !whiteToMove, 1, depth - 1);
                         if (!opp.empty()) {
                             auto const& opm = opp[0].move;
                             Board b2(b1);
-                            std::string src2, dst2;
-                            src2.push_back(char('A' + opm.fromRow));
-                            src2.push_back(char('1' + opm.fromCol));
-                            dst2.push_back(char('A' + opm.toRow));
-                            dst2.push_back(char('1' + opm.toCol));
-                            b2.doMove(src2, dst2);
-
+                            b2.doMove(
+                                opm.fromRow,
+                                opm.fromCol,
+                                opm.toRow,
+                                opm.toCol    // numeric overload
+                            );
                             auto self = getBestMoves(b2, whiteToMove, 1, depth - 2);
                             if (!self.empty())
                                 totalScore += self[0].score;

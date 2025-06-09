@@ -1,5 +1,6 @@
 #include "Pieces/Pawn.h"
 #include "PieceFactory.h"
+#include <iostream>
 
 Pawn::Pawn(bool isWhite, int row, int col)
     : Piece(isWhite, row, col) {}
@@ -11,31 +12,44 @@ char Pawn::getSymbol() const {
 bool Pawn::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
-    int direction = isWhite() ? 1 : -1;
-    int startRow = isWhite() ? 1 : 6;
 
-    int rowDiff = destRow - getRow();
-    int colDiff = std::abs(destCol - getCol());
+    int direction = isWhite() ? +1 : -1;    // White “down” the array, Black “up”
+    int startRow = isWhite() ? 1 : 6;    // row 1 = rank B, row 6 = rank G
+    int r = getRow(), c = getCol();
 
-    std::shared_ptr<Piece> target = board[destRow][destCol];
+    int rowDiff = destRow - r;
+    int colDiff = std::abs(destCol - c);
+    auto target = board[destRow][destCol];
 
-    // Move forward 1
+    // 1) Single?step straight into empty square
     if (colDiff == 0 && rowDiff == direction && !target) {
         return true;
     }
 
-    // Move forward 2 from starting position
-    if (colDiff == 0 && rowDiff == 2 * direction && getRow() == startRow && !target) {
+    // 2) Double?step from start rank: 
+    //    both the square in front *and* the landing square must be empty
+    if (colDiff == 0 && rowDiff == 2 * direction && r == startRow) {
+        int midRow = r + direction;
+        if (!board[midRow][c]   // path square clear
+            && !target)            // landing square clear
+        {
+            return true;
+        }
+    }
+
+    // 3) Diagonal capture by exactly one file, one rank
+    if (colDiff == 1 && rowDiff == direction
+        && target && target->isWhite() != isWhite())
+    {
         return true;
     }
 
-    // Diagonal capture
-    if (colDiff == 1 && rowDiff == direction && target && target->isWhite() != isWhite()) {
-        return true;
-    }
+    // (Optional) en passant, promotion, etc. goes here…
 
+    // everything else is illegal
     return false;
 }
+
 //==============================================================================
 bool Pawn::isPathClear(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const

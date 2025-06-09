@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include "MoveGenerator.h"
+#include "MovePrinter.h"
+
 
 using namespace std;
 
@@ -287,58 +289,54 @@ string Chess::getInput()
 	static bool isFirst = true;
 
 	if (isFirst) {
-		std::cout << "Enter search depth (0–2): ";
-		std::cin >> depth;
+		cout << "Enter search depth (0–2): ";
+		cin >> depth;
 		if (depth < 0 || depth > 2) {
-			std::cout << "Invalid depth. Using default depth of 0.\n";
+			cout << "Invalid depth. Using default depth of 0.\n";
 			depth = 0;
 		}
-	}
-	if (isFirst)
 		isFirst = false;
-	else
+	}
+	else {
 		doTurn();
+	}
 
+	// 1) Draw
 	displayBoard();
+
+	// 2) Recommend top 3 moves
 	Board tmp(m_boardString);
 	MoveGenerator gen;
-	auto best = gen.getBestMoves(tmp, m_turn, 1, depth);
-	if (!best.empty()) {
-		auto const& mv = best[0].move;
-		// files a–h from col 0–7, ranks 1–8 from row 7–0
-		char rowFrom = char('a' + mv.fromRow);
-		char colFrom = char('1' + mv.fromCol);
-		char rowTo = char('a' + mv.toRow);
-		char colTo = char('1' + mv.toCol);
-		std::cout << "Recommended move: "
-			<< rowFrom << colFrom
-			<< rowTo << colTo
-			<< "\n\n";
+	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/3, depth);
+	cout << "3 most recommanded moves : ";
+	for (size_t i = 0; i < best.size() && i < 3; ++i) {
+		cout << best[i].toString();
+		if (i + 1 < best.size() && i + 1 < 3) cout << ' ';
 	}
-	showAskInput();
+	cout << '\n';
 
+	// 3) Prompt & read
+	showAskInput();
 	cin >> m_input;
-	if (isExit())
-		return "exit";
-	while (!isValid() || isSame())
-	{
-		if (!isValid())
-			m_errorMsg = "Invalid input !! \n";
-		else
-			m_errorMsg = "The source and the destination are the same !! \n";
+	if (isExit()) return "exit";
+
+	// 4) Validate loop
+	while (!isValid() || isSame()) {
+		m_errorMsg = !isValid()
+			? "Invalid input !! \n"
+			: "The source and the destination are the same !! \n";
 		displayBoard();
 		showAskInput();
 		cin >> m_input;
-		if (isExit())
-			return "exit";
+		if (isExit()) return "exit";
 	}
 
-	if (m_input != "exit")
-	{
-		if (('A' <= m_input[0]) && (m_input[0] <= 'H'))
-			m_input[0] = (m_input[0] - 'A' + 'a');
-		if (('A' <= m_input[2]) && (m_input[2] <= 'H'))
-			m_input[2] = (m_input[2] - 'A' + 'a');
+	// 5) Normalize uppercase letters to lowercase for Board
+	if (m_input != "exit") {
+		if ('A' <= m_input[0] && m_input[0] <= 'H')
+			m_input[0] = char(m_input[0] - 'A' + 'a');
+		if ('A' <= m_input[2] && m_input[2] <= 'H')
+			m_input[2] = char(m_input[2] - 'A' + 'a');
 	}
 
 	return m_input;

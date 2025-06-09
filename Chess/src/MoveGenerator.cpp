@@ -89,8 +89,7 @@ MoveGenerator::getBestMoves(const Board& board,
     return best;
 }
 
-int
-MoveGenerator::evaluateMove(
+int MoveGenerator::evaluateMove(
     const std::vector<std::vector<std::shared_ptr<Piece>>>& mat,
     const Move& mv,
     bool whiteToMove) const
@@ -121,8 +120,7 @@ MoveGenerator::evaluateMove(
     return score;
 }
 
-bool
-MoveGenerator::squareAttacked(
+bool MoveGenerator::squareAttacked(
     const std::vector<std::vector<std::shared_ptr<Piece>>>& mat,
     int row,
     int col,
@@ -140,8 +138,7 @@ MoveGenerator::squareAttacked(
     return false;
 }
 
-int
-MoveGenerator::pieceValue(char symbol) const
+int MoveGenerator::pieceValue(char symbol) const
 {
     switch (std::toupper(symbol)) {
     case 'P': return 1;

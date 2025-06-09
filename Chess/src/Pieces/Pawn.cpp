@@ -1,4 +1,4 @@
-#include "Pieces/Pawn.h"
+ï»¿#include "Pieces/Pawn.h"
 #include "PieceFactory.h"
 #include <iostream>
 
@@ -13,42 +13,49 @@ bool Pawn::isValidMove(int destRow, int destCol,
     const std::vector<std::vector<std::shared_ptr<Piece>>>& board) const
 {
 
-    int direction = isWhite() ? +1 : -1;    // White “down” the array, Black “up”
-    int startRow = isWhite() ? 1 : 6;    // row 1 = rank B, row 6 = rank G
-    int r = getRow(), c = getCol();
+    bool return_val = false;
+    int r = getRow();
+    int c = getCol();
+    int direction = isWhite() ? +1 : -1;
+    int startRow = isWhite() ? 1 : 6;
 
     int rowDiff = destRow - r;
     int colDiff = std::abs(destCol - c);
     auto target = board[destRow][destCol];
+   
 
-    // 1) Single?step straight into empty square
+    // 1) Singleâ€step forward into empty square
     if (colDiff == 0 && rowDiff == direction && !target) {
-        return true;
+    
+         return_val = true;
     }
 
-    // 2) Double?step from start rank: 
-    //    both the square in front *and* the landing square must be empty
-    if (colDiff == 0 && rowDiff == 2 * direction && r == startRow) {
-        int midRow = r + direction;
-        if (!board[midRow][c]   // path square clear
-            && !target)            // landing square clear
-        {
-            return true;
-        }
-    }
-
-    // 3) Diagonal capture by exactly one file, one rank
-    if (colDiff == 1 && rowDiff == direction
-        && target && target->isWhite() != isWhite())
+    // 2) Doubleâ€step from starting rank: both the intermediate and landing squares must be empty
+    if (colDiff == 0
+        && rowDiff == 2 * direction
+        && r == startRow
+        && !board[r + direction][c]
+        && !target)
     {
-        return true;
+       
+         return_val = true;
     }
 
-    // (Optional) en passant, promotion, etc. goes here…
+    // 3) Diagonal capture by one file and one rank
+    if (colDiff == 1
+        && rowDiff == direction
+        && target
+        && target->isWhite() != isWhite())
+    {
+        
+         return_val = true;
+    }
 
-    // everything else is illegal
-    return false;
+   
+
+    return return_val;
 }
+
 
 //==============================================================================
 bool Pawn::isPathClear(int destRow, int destCol,

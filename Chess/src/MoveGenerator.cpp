@@ -1,5 +1,6 @@
-#include "MoveGenerator.h"
+﻿#include "MoveGenerator.h"
 #include <string>
+#include <iostream>
 
 std::vector<ScoredMove>
 MoveGenerator::getBestMoves(const Board& board,
@@ -7,7 +8,7 @@ MoveGenerator::getBestMoves(const Board& board,
     size_t maxCount,
     int depth)
 {
-    // Grab the 8�8 grid of pieces
+    // Grab the 8×8 grid of pieces
     const auto& mat = board.getMatrix();
     // Bounded PQ that keeps only top maxCount moves
     PriorityQueue<ScoredMove, ScoredMoveComparator> pq(maxCount);

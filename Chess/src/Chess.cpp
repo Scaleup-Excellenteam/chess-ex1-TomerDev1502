@@ -181,7 +181,7 @@ void Chess::show() const
 // clear screen and print the board and the relevant msg 
 void Chess::displayBoard() const
 {
-	clear();
+	//clear();
 	show();
 	cout << m_msg<< m_errorMsg;
 	
@@ -307,11 +307,11 @@ string Chess::getInput()
 	// 2) Recommend top 3 moves
 	Board tmp(m_boardString);
 	MoveGenerator gen;
-	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/3, depth);
-	cout << "3 most recommanded moves : ";
-	for (size_t i = 0; i < best.size() && i < 3; ++i) {
+	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/1, depth);
+	cout << "most recommanded move : ";
+	for (size_t i = 0; i < best.size() && i < 1; ++i) {
 		cout << best[i].toString();
-		if (i + 1 < best.size() && i + 1 < 3) cout << ' ';
+		if (i + 1 < best.size() && i + 1 < 1) cout << ' ';
 	}
 	cout << '\n';
 

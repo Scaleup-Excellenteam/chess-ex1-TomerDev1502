@@ -275,7 +275,7 @@ void Chess::doTurn()
 
 // C'tor
 Chess::Chess(const string& start)
-	: m_boardString(start),m_codeResponse(-1)
+	: m_boardString(start), m_codeResponse(-1), depth(0),m_turn(true)
 {
 	setFrames();
 	setPieces();
@@ -286,15 +286,23 @@ string Chess::getInput()
 {
 	static bool isFirst = true;
 
+	if (isFirst) {
+		std::cout << "Enter search depth (0–2): ";
+		std::cin >> depth;
+		if (depth < 0 || depth > 2) {
+			std::cout << "Invalid depth. Using default depth of 0.\n";
+			depth = 0;
+		}
+	}
 	if (isFirst)
 		isFirst = false;
 	else
-		doTurn(); 
+		doTurn();
 
 	displayBoard();
 	Board tmp(m_boardString);
 	MoveGenerator gen;
-	auto best = gen.getBestMoves(tmp, m_turn, /*maxCount=*/1);
+	auto best = gen.getBestMoves(tmp, m_turn, 1, depth);
 	if (!best.empty()) {
 		auto const& mv = best[0].move;
 		// files a–h from col 0–7, ranks 1–8 from row 7–0
@@ -308,7 +316,7 @@ string Chess::getInput()
 			<< "\n\n";
 	}
 	showAskInput();
-	
+
 	cin >> m_input;
 	if (isExit())
 		return "exit";
@@ -335,6 +343,7 @@ string Chess::getInput()
 
 	return m_input;
 }
+
 
 void Chess::setCodeResponse(int codeResponse)
 {

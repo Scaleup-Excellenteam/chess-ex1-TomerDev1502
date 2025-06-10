@@ -289,7 +289,7 @@ string Chess::getInput()
 	static bool isFirst = true;
 
 	if (isFirst) {
-		cout << "Enter search depth (0–2): ";
+		cout << "Enter search depth (0 - 2): ";
 		cin >> depth;
 		if (depth < 0 || depth > 2) {
 			cout << "Invalid depth. Using default depth of 0.\n";
